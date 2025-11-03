@@ -1,0 +1,26 @@
+<html>
+<body>
+    <div class="book">
+        <h2 class="title">The Great Gatsby</h2>
+        <p class="author">F. Scott Fitzgerald</p>
+    </div>
+    <div class="book">
+        <h2 class="title">To Kill a Mockingbird</h2>
+        <p class="author">Harper Lee</p>
+    </div>
+</body>
+</html>
+import requests
+from bs4 import BeautifulSoup
+
+url = 'http://example.com/books'
+response = requests.get(url)
+soup = BeautifulSoup(response.text, 'html.parser')
+
+books = []
+for book in soup.find_all('div', class_='book'):
+    title = book.find('h2', class_='title').text
+    author = book.find('p', class_='author').text
+    books.append({'title': title, 'author': author})
+
+print(books)
